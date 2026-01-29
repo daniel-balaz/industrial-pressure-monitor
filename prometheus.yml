@@ -1,0 +1,7 @@
+global:
+  scrape_interval: 3s
+
+scrape_configs:
+  - job_name: 'moje_stroje'
+    static_configs:
+      - targets: ['vakuova-pokovovacka_1:8000', 'vakuova-pokovovacka_2:8000']

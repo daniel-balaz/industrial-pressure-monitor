@@ -1,0 +1,50 @@
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+
+  vakuova-pokovovacka_1:
+    build:
+      context: .
+      dockerfile: Vakuova-pokovovacka/Dockerfile
+    environment:
+      - MACHINE_ID=VAPA_01
+      - HALL=A
+      - CHANCE_OF_ERROR=0.1
+      - TARGET_PRESSURE=5000.0
+      - LIMIT_NOTICE=1.04
+      - LIMIT_WARNING=1.06
+      - LIMIT_ERROR=1.08
+      - LIMIT_CRITICAL=1.10
+      - LIMIT_EMERGENCY=1.14
+    ports:
+      - "8000:8000"
+
+  vakuova-pokovovacka_2:
+    build:
+      context: .
+      dockerfile: Vakuova-pokovovacka/Dockerfile
+    environment:
+      - MACHINE_ID=VAPA_02
+      - HALL=A
+      - CHANCE_OF_ERROR=0.001
+      - TARGET_PRESSURE=5000.0
+      - LIMIT_NOTICE=1.02
+      - LIMIT_WARNING=1.04
+      - LIMIT_ERROR=1.06
+      - LIMIT_CRITICAL=1.08
+      - LIMIT_EMERGENCY=1.14
+    ports:
+      - "8001:8000"
