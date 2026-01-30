@@ -1,4 +1,4 @@
-# Industrial Pressure Monitoring System 🏭
+# Industrial Pressure Monitoring System
 
 A professional IoT monitoring solution for vacuum coating machines. This system features real-time data processing, anomaly detection, and automated alerting via Telegram.
 
