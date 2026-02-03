@@ -40,4 +40,4 @@ class SimulationData:
     NORMAL: str = "NORMAL"
     PRESSURE_ERROR: str = "PRESSURE ERROR"
     STOP: str = "STOP"
-    state: str = "NORMAL"
+    state: str = NORMAL

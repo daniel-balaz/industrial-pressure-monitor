@@ -30,7 +30,7 @@ class Machine:
                 self.data.current_pressure = self.data.degradation + (self.data.current_pressure + (((self.TARGET_PRESSURE - self.data.current_pressure) * diff) + random_num))
             elif self.data.current_pressure >= self.TARGET_PRESSURE:
                 self.data.current_pressure = self.data.degradation + (self.data.current_pressure - (((self.data.current_pressure - self.TARGET_PRESSURE) * diff) + random_num))
-    
+
         elif self.data.state == self.data.PRESSURE_ERROR:
             diff_error = random.uniform(10.0, 60.0)
             if self.data.current_pressure < self.TARGET_PRESSURE:
@@ -39,5 +39,5 @@ class Machine:
             elif self.data.current_pressure >= self.TARGET_PRESSURE:
                 self.data.current_pressure = diff_error + (self.data.degradation + self.data.current_pressure - (((self.data.current_pressure - self.TARGET_PRESSURE) * diff) + random_num))
                 self.data.current_pressure += self.data.current_pressure * self.data.noise
-            self.data.noise = self.data.noise * 1.01
+            self.data.noise = min(self.data.noise * 1.01, 100.0)
         self.data.current_pressure = round(self.data.current_pressure, 2)

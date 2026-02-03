@@ -1,5 +1,6 @@
 from data import SimulationData, Config
 from common import alerts
+import logging
 
 class Outputs:
     def __init__(self, cfg: Config, data: SimulationData, p_metric, avg_metric):
@@ -15,15 +16,14 @@ class Outputs:
             alerts.TelegramAlert.send_alert(self.machine_id, self.hall, self.data.msg)
         self.data.msg = ""
  
-    def prometeus(self):
+    def prometheus(self):
         self.p_metric.labels(machine_id=self.machine_id, hall=self.hall).set(self.data.current_pressure)
         self.avg_metric.labels(machine_id=self.machine_id, hall=self.hall).set(self.data.avg_pressure)
  
     def message(self):
-        print(f"Machine: {self.machine_id}")
-        print(f"Pressure: {self.data.current_pressure}")
-        print(f"Avg. Pressure: {self.data.avg_pressure}")
-        print(f"Median: {self.data.median}   |   {self.data.diff}")
-        print(f"State: {self.data.state}")
-        print(f"Points: {self.data.checked_pressures}")
-        print("-" * 20)
+        logging.info(f"Machine: {self.machine_id}")
+        logging.info(f"Pressure: {self.data.current_pressure}")
+        logging.info(f"Avg. Pressure: {self.data.avg_pressure}")
+        logging.info(f"Median: {self.data.median}")
+        logging.info(f"State: {self.data.state}")
+        logging.info(f"Points: {self.data.checked_pressures}")

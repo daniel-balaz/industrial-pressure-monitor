@@ -52,7 +52,7 @@ if __name__ == "__main__":
             
             #outputs.message()
             outputs.send_telegram_message()
-            outputs.prometeus()
+            outputs.prometheus()
 
             time.sleep(3)
             

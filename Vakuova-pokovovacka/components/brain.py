@@ -24,7 +24,7 @@ class Brain:
         self.data.avg_pressure = round(self.data.avg_pressure, 2)
  
     def check(self):
-        if self.data.median == None:
+        if self.data.median is None:
             if self.TARGET_PRESSURE * self.cfg.LIMIT_EMERGENCY < self.data.avg_pressure:
                 self.data.over_pressured.append(5)
             elif self.TARGET_PRESSURE * self.cfg.LIMIT_ERROR < self.data.avg_pressure:
@@ -48,9 +48,9 @@ class Brain:
         if self.data.current_pressure < self.data.avg_pressure and self.data.current_pressure < self.TARGET_PRESSURE + (self.TARGET_PRESSURE * 0.01):
             self.data.over_pressured = []
 
-        try:
+        if self.data.over_pressured:
             self.data.checked_pressures = sum(self.data.over_pressured) / len(self.data.over_pressured)
-        except:
+        else:
             self.data.checked_pressures = 0.0
  
         self.data.checked_pressures = round(self.data.checked_pressures, 2)
@@ -59,13 +59,13 @@ class Brain:
    
     def brain(self):
         if self.data.checked_pressures >= 4.5:
-            self.data.msg = f"!!! VYPÍNÁNÍ !!!\nTlak překrořil maximalní tlak - {self.data.current_pressure} Pa"
+            self.data.msg = f"!!! VYPÍNÁNÍ !!!\nTlak překročil maximální limit - {self.data.current_pressure} Pa"
             self.data.state = self.data.STOP
         elif self.data.checked_pressures >= 3.0 and not self.data.alert_lvl_three:
             self.data.msg = f"!!! KRITICKÉ !!!\nTlak nekontrolovatelně roste.\nOkamžitě vypněte stroj a proveďte kontrolu."
             self.data.alert_lvl_three = True
         elif self.data.checked_pressures >= 2.0 and not self.data.alert_lvl_two:
-            self.data.msg = f"!!! VAROVÁNÍ !!!\nTlak nebezpečně roste.\nProveďte kontrolu nejdříve jak to bude možné."
+            self.data.msg = f"!!! VAROVÁNÍ !!!\nTlak nebezpečně roste.\nDoporučená kontrola."
             self.data.alert_lvl_two = True
         elif self.data.current_pressure > self.TARGET_PRESSURE * 1.5 and self.data.median is not None and self.data.median < self.TARGET_PRESSURE * 1.1 and not self.data.alert_lvl_one:
             self.data.msg = f"!!! OZNÁMENÍ !!!\nZkontrolujte senzor."
