@@ -1,9 +1,12 @@
+# IMPORT
 from dataclasses import dataclass, field
 from typing import List, Optional
 import os
 
+# POŽITÍ DATA CLASSES PRO UDRŽITELNOST ČISTOTY I PŘI VYŠŠÍM POČTU PROMĚNNÝCH
 @dataclass
 class Config():
+    
     LIMIT_NOTICE: float = float(os.getenv("LIMIT_NOTICE", 1.02))
     LIMIT_WARNING: float = float(os.getenv("LIMIT_WARNING", 1.04))
     LIMIT_ERROR: float = float(os.getenv("LIMIT_ERROR", 1.06))
