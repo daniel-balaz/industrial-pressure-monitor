@@ -24,7 +24,7 @@ services:
     environment:
       - MACHINE_ID=VAPA_01
       - HALL=A
-      - CHANCE_OF_ERROR=0.001
+      - CHANCE_OF_ERROR=0.1
       - TARGET_PRESSURE=5000.0
       - LIMIT_NOTICE=1.04
       - LIMIT_WARNING=1.06
